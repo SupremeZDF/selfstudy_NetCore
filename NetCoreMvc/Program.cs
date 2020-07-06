@@ -7,16 +7,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dapper
+namespace NetCoreMvc
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var a = CreateHostBuilder(args);   //创建对象hostbuirder
-            var b = a.Build();
-            b.Run(); 
-           // CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

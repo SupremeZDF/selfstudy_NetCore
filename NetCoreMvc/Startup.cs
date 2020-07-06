@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -11,12 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
-using WX.Applications;
-using WX.Applications.Itemplate;
-using Dapper.Webapi.controllerBase;
 
-namespace Dapper
+namespace NetCoreMvc
 {
     public class Startup
     {
@@ -27,40 +22,12 @@ namespace Dapper
 
         public IConfiguration Configuration { get; }
 
-        ILogger<NlogController> logger;
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddRazorPages();
-
-            services.AddControllersWithViews();  // 添加 mvc 需要的 各种服务
-
-            services.AddSwaggerGen((c) =>
-            {
-
-                services.Configure<CookiePolicyOptions>(option =>
-                {
-
-                });
-
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
-                {
-                    Version = "v1.1.0",
-                    Title = "WebApi",
-                    Description = "WebApi框架",
-                    TermsOfService = null
-                });
-
-                //c.OperationFilter<FliterParameter>();
-
-                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var xmlPath = Path.Combine(basePath, "Dapper.Webapi.xml");
-                c.IncludeXmlComments(xmlPath);
-            });
-
+            services.AddControllersWithViews();
             services.AddControllers();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,18 +36,13 @@ namespace Dapper
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            } 
-            //你是逗比
-            app.UseSwagger();
-            app.UseSwaggerUI((c) =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "dsadasdasdas");
-            });
+            }
 
-            app.UseHttpsRedirection();
+            app.UseSession();  // 使用session
 
             app.UseRouting();
 
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints =>
             {
@@ -89,8 +51,6 @@ namespace Dapper
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
             });
-
-            app.UseStaticFiles();
 
             app.UseAuthorization();
         }

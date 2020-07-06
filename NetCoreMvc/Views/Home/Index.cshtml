@@ -1,0 +1,26 @@
+﻿@model WX.Model.Model.CreateUsercs;
+@using WX.Model.Model;
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = null;
+    CreateUsercs create = ViewBag.data as CreateUsercs;
+
+    CreateUsercs session = Newtonsoft.Json.JsonConvert.DeserializeObject<CreateUsercs>(base.Context.Session.GetString("creteMVC"));
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>@(((CreateUsercs)ViewBag.data).Name)</h2>
+    <h2>@create.Name</h2>
+    <h2>@session.Pswd</h2>
+    <h2></h2>
+    <h2></h2>
+    <h2></h2>
+</body>
+</html>

@@ -14,10 +14,16 @@ namespace Dapper.Controllers
         public void Run() 
         {
 
+             
             //OneSqlqer.SelectUser();
             OneSqlqer.InSelect();
             //OneSqlqer.InsertList();
             //OneSqlqer.DataClass();
+        }
+
+        public void GetRun()
+        {
+            //var data = HttpContext.Session.Set();
         }
     }
 }

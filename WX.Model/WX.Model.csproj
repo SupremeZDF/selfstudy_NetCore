@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Sockets\" />
+    <Folder Include="Demoi\" />
   </ItemGroup>
 
   <ItemGroup>
