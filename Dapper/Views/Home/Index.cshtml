@@ -9,8 +9,75 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
-    <img src="~/image/2021810.jpg"  style="width:500px;height:500px"/>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2">
+                <input type="text" class="form-control" placeholder=".col-xs-2">
+            </div>
+            <div class="col-xs-3">
+                <input type="text" class="form-control" placeholder=".col-xs-3">
+            </div>
+            <div class="col-xs-4">
+                <input type="text" class="form-control" placeholder=".col-xs-4">
+            </div>
+        </div>
+
+        <!-- Standard button -->
+        <button type="button" class="btn btn-default">（默认样式）Default</button>
+
+        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+        <button type="button" class="btn btn-primary" id="Add" onclick="Add()">（首选项）Primary</button>
+    </div>
+    <script>
+        function A() {
+            $.ajax({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("ss", "ds");
+                },
+                url: "/home/Head",
+                type: "post",
+                success: function () {
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+        var Add = function ()
+        {
+             $.ajax({
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("ss", "ds");
+                },
+                url: "/home/Head",
+                type: "post",
+                success: function () {
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+        $.ajax({
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("ss", "ds");
+            },
+            url: "/home/Head",
+            type: "post",
+            success: function () {
+            },
+            error: function () {
+
+            }
+        })
+    </script>
 </body>
 </html>

@@ -15,6 +15,11 @@ using Microsoft.Extensions.PlatformAbstractions;
 using WX.Applications;
 using WX.Applications.Itemplate;
 using Dapper.Webapi.controllerBase;
+using Microsoft.EntityFrameworkCore.Sqlite;
+using Orm.MVC.Model;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dapper
 {
@@ -33,18 +38,19 @@ namespace Dapper
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddRazorPages();
+            //services.AddRazorPages();
 
             services.AddControllersWithViews();  // 添加 mvc 需要的 各种服务
 
+            //services.AddDbContext<Orm.MVC.Model.DataContenx>(optionsBuilder =>
+            //{
+
+            //    var config = Configuration.GetSection("ConnectionSetting").Get<Consqlcontion>();
+            //    optionsBuilder.UseSqlServer(config.ReadConnectionString);
+            //});
+
             services.AddSwaggerGen((c) =>
             {
-
-                services.Configure<CookiePolicyOptions>(option =>
-                {
-
-                });
-
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
                     Version = "v1.1.0",
@@ -52,9 +58,6 @@ namespace Dapper
                     Description = "WebApi框架",
                     TermsOfService = null
                 });
-
-                //c.OperationFilter<FliterParameter>();
-
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "Dapper.Webapi.xml");
                 c.IncludeXmlComments(xmlPath);
@@ -69,7 +72,13 @@ namespace Dapper
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            } 
+            }
+            //else 
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //    app.UseStaticFiles();
+            //}
+
             //你是逗比
             app.UseSwagger();
             app.UseSwaggerUI((c) =>
@@ -93,6 +102,8 @@ namespace Dapper
             app.UseStaticFiles();
 
             app.UseAuthorization();
+
+            //contenx.Database.EnsureCreated();
         }
     }
 }

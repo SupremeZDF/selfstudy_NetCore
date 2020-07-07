@@ -1,0 +1,66 @@
+﻿@*@page
+@model Dapper.Webapi.Controllers.HomeController
+@model Orm.MVC.Model.T_Question
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>T_QuestionIndex</title>
+</head>
+<body>
+    <h1>Index</h1>
+
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => HomeController.t_Questions[0].Image)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => t_QuestionPageModel.t_Questions[0].Headline)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => t_QuestionPageModel.t_Questions[0].UserID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => t_QuestionPageModel.t_Questions[0].DataTime)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in t_QuestionPageModel.t_Questions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Headline)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Image)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>*@
