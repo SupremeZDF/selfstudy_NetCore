@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -17,6 +18,7 @@ namespace Orm.MVC.Model
 
         public string Headline { get; set; }
 
+        [DisplayName("eqwewqedadasdasdas")]
         public string Content{ get; set; }
 
         public int IssuestateID { get; set; }
@@ -35,11 +37,23 @@ namespace Orm.MVC.Model
         {
 
         }
-        public DbSet<T_Question> t_Questions { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        public DataContenx()
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.;Initial Catalog=ZhiHu;Integrated Security=True");
+
         }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //}
+
+        public DbSet<T_Question> T_Question { get; set; }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Data Source=.;Initial Catalog=ZhiHu;Integrated Security=True");
+        //}
     }
 }

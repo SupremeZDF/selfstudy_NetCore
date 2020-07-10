@@ -18,8 +18,10 @@ namespace NetCoreMvc
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    Console.WriteLine("D");
                     webBuilder.UseStartup<Startup>();
                 });
     }

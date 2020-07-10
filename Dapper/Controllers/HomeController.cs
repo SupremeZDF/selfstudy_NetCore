@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Orm.MVC.Model;
 using Orm.MVC.Page;
 using System.Dynamic;
+using Microsoft.Extensions.Caching.Memory;
+
+using System.Reflection;
 
 namespace Dapper.Webapi.Controllers
 {
@@ -16,9 +19,11 @@ namespace Dapper.Webapi.Controllers
 
         //public List<T_Question> t_Questions { get; set; }
 
-        public HomeController()
+        public readonly IMemoryCache _cache;
+
+        public HomeController(IMemoryCache cache)
         {
-            
+            _cache = cache;
         }
 
         public IActionResult Index()
@@ -78,7 +83,7 @@ namespace Dapper.Webapi.Controllers
                 DataTime = DateTime.Now,
                 Headline = "123"
             };
-            return View();
+            return View(t_Question);
             //return Redirect("/home/index");
         }
 
@@ -111,5 +116,47 @@ namespace Dapper.Webapi.Controllers
             //await _contenx.SaveChangesAsync();
             return View();
         }
+
+
+        public IActionResult T_Son() 
+        {
+            return View();
+        }
+
+
+        public IActionResult Partial() 
+        {
+            return PartialView("~/Views/Home/t_sons.cshtml");
+            //return PartialView("~/Views/Home/t_sons.cshtml");
+        }
+
+
+
+        public IActionResult memoryCache()
+        {
+
+            var A = _cache.Get("A");
+
+            var B = _cache.Get("B");
+
+            return View();
+        }
+
+        [HttpPost]
+        public void requird(User user) 
+        {
+
+
+        }
+
+
+        public void EF() 
+        {
+            //using (var db = new DataContenx())
+            //{
+            //    var data = db.T_Question.ToList();
+            //}
+        }
+
     }
 }

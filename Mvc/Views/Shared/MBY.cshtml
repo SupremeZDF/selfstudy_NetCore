@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MBY</title>
+</head>
+<body>
+    @RenderSection("A",false)
+    <h3>页眉</h3>
+    @RenderBody()
+    <h3>页脚</h3>
+    @RenderSection("B",false)
+    
+</body>
+</html>

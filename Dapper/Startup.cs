@@ -49,6 +49,9 @@ namespace Dapper
             //    optionsBuilder.UseSqlServer(config.ReadConnectionString);
             //});
 
+
+            services.AddSession();
+
             services.AddSwaggerGen((c) =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -64,7 +67,14 @@ namespace Dapper
             });
 
             services.AddControllers();
-        }
+
+            services.AddDbContext<DbContext>(c =>
+            {
+                c.UseSqlServer("Data Source=.;Initial Catalog=ZhiHu;Integrated Security=True");
+            });
+
+            services.AddMvc(c=>c.EnableEndpointRouting=false).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+      }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -79,6 +89,8 @@ namespace Dapper
             //    app.UseStaticFiles();
             //}
 
+            app.UseSession();
+
             //ÄãÊÇ¶º±È
             app.UseSwagger();
             app.UseSwaggerUI((c) =>
@@ -90,6 +102,27 @@ namespace Dapper
 
             app.UseRouting();
 
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
+
+
+
+            app.UseStaticFiles();
+
+            app.UseAuthorization();
+
+
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseEndpoints(endpoints =>
             {
@@ -97,11 +130,10 @@ namespace Dapper
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                     );
+
             });
 
-            app.UseStaticFiles();
-
-            app.UseAuthorization();
+            //app.UseEndpoints = false;
 
             //contenx.Database.EnsureCreated();
         }

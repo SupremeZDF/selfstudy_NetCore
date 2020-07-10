@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "T_Son";
+    Layout = "~/Views/Home/MBY.cshtml";
+}
+
+<h2>T_Son</h2>
+
+<h1>这是子版页</h1>
+
+
+@*@Html.Partial("~/Views/Home/T_Sons.cshtml");*@
+
+
+@*@section A{
+    <p>mubanyeA</p>
+}*@
+
+@section B
+{
+
+    <p>mubanyeB</p>
+
+}
+
+@Html.Partial("/Views/Home/T_Sons.cshtml");
