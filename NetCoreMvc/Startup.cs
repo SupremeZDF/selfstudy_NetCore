@@ -16,6 +16,13 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Orm.MVC.SqlClient;
+using Orm.MVC;
+using Orm.MVC.IOC;
+using Orm.MVC.Implate;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Autofac.Extras.DynamicProxy;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
 
 namespace NetCoreMvc
 {
@@ -23,7 +30,6 @@ namespace NetCoreMvc
     {
         public Startup(IConfiguration configuration)
         {
-            Console.WriteLine("E");
             Configuration = configuration;
         }
 
@@ -32,14 +38,50 @@ namespace NetCoreMvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            Console.WriteLine("F");
-
-            var count = 3700 + 2849 + 5169 + 999;
-
             services.AddControllersWithViews();
-            services.AddControllers();
+            services.AddControllers().AddControllersAsServices();
             services.AddSession();
+
+
+            //services.BuildServiceProvider
+
+
+            ////傻狗
+            //services.AddTransient<Ittansient, Transient>(); //
+            //services.AddScoped<Iscope, Scope>();
+            services.AddTransient<ISingleton, Singleton>();
+            services.AddTransient<Singleton>();
+            //services.AddTransient<Ittansient>(c =>
+
+            ////services.TryAddEnumerable(); //如果存在相同 不注册进去 不相同 则可以注册进去
+            //{
+            //    return new Transient();
+            //});
+
+
+            //services.AddSingleton(typeof(Itypeservice<>), typeof(TpeyServcie<>));
+
+            //IServiceProviderFactory
+
+            //services.AddSingleton();
+
+            //services.RemoveAll<>();
+
+            //services.Replace(ServiceDescriptor.Transient<Ittansient,Transient>()); 替换服务
+
+
+            //services.AddTransient<IdisposableService, DisposAbleService>();
+            //services.AddSingleton<IdisposableService, DisposAbleService>();
+
+            // services.AddScoped<IdisposableService, DisposAbleService>();
+
+            //services.AddSingleton<IdisposableService>(p => new DisposAbleService());
+
+            var servicesData = new DisposAbleService();
+            //IServiceProviderFactory
+            services.AddSingleton<IdisposableService>(servicesData);
+
+
 
             services.AddSwaggerGen((c) =>
             {
@@ -55,6 +97,10 @@ namespace NetCoreMvc
                 c.IncludeXmlComments(xmlPath);
             });
 
+            //var i = services.BuildServiceProvider();
+
+            //i.GetService<ISingleton>();
+
             services.AddDbContext<NoteContext>(option =>
             {
                 option.UseSqlServer("server=.;database=Note;uid=sa;pwd=123456");
@@ -63,18 +109,52 @@ namespace NetCoreMvc
             services.AddMvc(c => c.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder) 
+        {
+            //
+            //builder.RegisterType<MyserviceA>().As<IMyservice>();
+            //builder.RegisterType<MyserviceB>().Named<IMyservice>("Named").PropertiesAutowired();
+
+            //builder.RegisterType<MyNameService>();
+
+            builder.RegisterType<MyInterceptor>();
+            //builder.RegisterType<MyserviceB>().As<IMyservice>().PropertiesAutowired().InterceptedBy(typeof(MyInterceptor)).EnableInterfaceInterceptors();
+
+            builder.RegisterType<MyserviceA>().PropertiesAutowired().InterceptedBy(typeof(MyInterceptor)).EnableClassInterceptors();
+        }
+
+
+        public ILifetimeScope lifetimeScope { get; private set; }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            Console.WriteLine("G");
+            lifetimeScope = app.ApplicationServices.GetAutofacRoot();
+
+            //var autoService = this.lifetimeScope.Resolve<IMyservice>();
+
+            var autserviceName = lifetimeScope.Resolve<MyserviceA>();
+
+            //autoService.showCode();
+
+            autserviceName.showCode();
+
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            //var data = app.ApplicationServices.GetService<ISingleton>();
+
             app.UseSession();  // 使用session
+
+            //var code = data.GetHashCode();
 
             app.UseSwagger();
             app.UseSwaggerUI((c) =>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using WX.Model.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Orm.MVC.Model;
 
 namespace NetCoreMvc.Controllers
 {

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Autofac.Extras.DynamicProxy;
+using Autofac.Extensions.DependencyInjection;
 
 namespace NetCoreMvc
 {
@@ -18,10 +20,10 @@ namespace NetCoreMvc
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    Console.WriteLine("D");
+                   
                     webBuilder.UseStartup<Startup>();
                 });
     }
