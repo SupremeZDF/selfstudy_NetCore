@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Model\SwaggerVerification.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Model\SwaggerVerification.cs" />
+  </ItemGroup>
+
+</Project>

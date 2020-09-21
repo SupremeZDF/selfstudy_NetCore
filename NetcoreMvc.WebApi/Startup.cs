@@ -43,6 +43,7 @@ namespace NetcoreMvc.WebApi
         {
             //string Name = string.Join(",", new List<string> { "234","34234","34234"});
 
+            var cc = System.DBNull.Value;
 
             services.AddControllers();
 
@@ -92,6 +93,7 @@ namespace NetcoreMvc.WebApi
                 });
                 var basePath = PlatformServices.Default.Application.ApplicationBasePath;
                 var xmlPath = Path.Combine(basePath, "NetcoreMvc.WebApi.xml");
+                
                 c.IncludeXmlComments(xmlPath);
             });
         }
@@ -105,12 +107,13 @@ namespace NetcoreMvc.WebApi
             }
 
             app.UseHttpsRedirection();
-
+           
             app.UseSwagger();
 
             app.UseSwaggerUI((c) =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "dsadasdasdas");
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseRouting();

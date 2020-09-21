@@ -14,10 +14,47 @@
     <title>Index</title>
 </head>
 <body>
-    <script>
-        $.ajaxSetup({
 
-        })
+    <script>
+         function setCookie(cname, cvalue, exdays) {
+             var d = new Date();
+             d.setTime(d.getTime + (exdays * 24 * 60 * 60 * 1000));
+             var expires = "expires=" + d.toUTCString();
+             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+         }
+
+         function GetCookie(cname) {
+             var name = cname + "=";
+             var decodeCookie = decodeURIComponent(document.cookie);
+             console.log(decodeCookie);
+             var ca = decodeCookie.split(";");
+             for (var i = 0; i < ca.length; i++) {
+                 var c = ca[i];
+                 console.log(c.charAt(0));
+                 while (c.charAt(0) == ' ') {
+                     c = c.substring(1);
+                 }
+                 if (c.indexOf(name) == 0) {
+                     return c.substring(name.length, c.length);
+                 }
+             }
+             return "";
+         }
+
+         function checkCookie() {
+             var username = GetCookie("userName");
+             if (username != "") {
+                 alert("welcome again" + username);
+             } else {
+                 username = prompt("dasdasdasdasda", "");
+                 if (username != null && username != "") {
+                     setCookie("userName", username, 365);
+                 }
+             }
+         }
+        
+
+        window.onload = checkCookie;
     </script>
 </body>
 </html>
