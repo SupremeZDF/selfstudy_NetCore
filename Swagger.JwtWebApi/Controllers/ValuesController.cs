@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Swagger.JwtWebApi.model;
 
 namespace Swagger.JwtWebApi.Controllers
 {
@@ -12,14 +11,6 @@ namespace Swagger.JwtWebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        /// <summary>
-        /// sss
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public OneModel Name([FromBody]OneModel model)
-        {
-            return model;
-        }
+       
     }
 }

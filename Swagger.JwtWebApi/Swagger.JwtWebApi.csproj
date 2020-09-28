@@ -17,5 +17,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Swagger.JwtModel\Swagger.JwtModel.csproj" />
+    <ProjectReference Include="..\Swagger.JwtService\Swagger.JwtService.csproj" />
+  </ItemGroup>
+
 
 </Project>

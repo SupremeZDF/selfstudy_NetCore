@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.PlatformAbstractions;
-     
+
 namespace Swagger.JwtWebApi
 {
     public class Startup
@@ -30,6 +30,11 @@ namespace Swagger.JwtWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            TestArraySeg();
+            //int ccc;
+            //cc(ref ccc);
+            int ww;
+            cc(out ww);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -42,7 +47,7 @@ namespace Swagger.JwtWebApi
                     Contact = new Microsoft.OpenApi.Models.OpenApiContact()
                     {
                         Name = "Jee",
-                        Email="princess@GMAIL.COM"
+                        Email = "princess@GMAIL.COM"
                     }
                 });
                 //string[] str = new string[] { "1" };
@@ -52,8 +57,59 @@ namespace Swagger.JwtWebApi
                 var b = PlatformServices.Default.Application.ApplicationBasePath;    //D:\学习\练习Excitens\WX\excitensOne\wx.webapi\Swagger.JwtWebApi\bin\Debug\netcoreapp3.1\
                 var xmlpath = Path.Combine(AppContext.BaseDirectory, xmlfile);  //D:\学习\练习Excitens\WX\excitensOne\wx.webapi\Swagger.JwtWebApi\bin\Debug\netcoreapp3.1\Swagger.JwtWebApi.xml
                 //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
-                c.IncludeXmlComments(xmlpath,true);
+                c.IncludeXmlComments(xmlpath, true);
             });
+        }
+
+        private void TestArraySeg()
+        {
+            int[] a1 = new int[] { 1, 3, 5, 7, 9 };
+            int[] a2 = new int[] { 2, 4, 6, 8, 10 };
+
+            var seg = new ArraySegment<int>[2]
+            {
+            new ArraySegment<int>(a1, 0, 3),
+            new ArraySegment<int>(a2, 2, 3)
+            };
+
+            ArraySegment<int>[] ss = new ArraySegment<int>[2]{ new ArraySegment<int>(),new ArraySegment<int>()};
+            //List<ArraySegment()>
+
+            var a ="SumArraySegment = " + SumArraySegment(seg) ;
+
+            for (int i = 0; i < a1.Length; i++)
+            {
+                var b = "a1 = " + a1[i];
+            }
+
+            for (int i = 0; i < a2.Length; i++)
+            {
+                var c = "a2 = " + a2[i];
+            }
+            //List<List<string>> vs1 = new List<List<string>>();
+            //foreach(var i in )
+        }
+
+        private int SumArraySegment(ArraySegment<int>[] seg)
+        {
+            var c= seg[0].Array;
+            int sum = 0;
+            for (int i = 0; i < seg.Length; i++)
+            {
+                for (int j = seg[i].Offset; j < seg[i].Offset + seg[i].Count; j++)
+                {
+                    //可以通过数组段访问原数组，修改原数组的值
+                    seg[i].Array[j] = 0;
+                    //sum += seg[i].Array[j];
+                }
+            }
+            Array.Copy();
+            return sum;
+
+        }
+        public void cc(out int i)
+        {
+            i = 5;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
