@@ -103,7 +103,6 @@ namespace Swagger.JwtWebApi
                     //sum += seg[i].Array[j];
                 }
             }
-            Array.Copy();
             return sum;
 
         }

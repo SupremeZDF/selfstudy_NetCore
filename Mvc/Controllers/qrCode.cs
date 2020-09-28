@@ -16,7 +16,7 @@ namespace Mvc.Controllers
             return View();
         }
 
-        public void qrCodes() 
+        public void qrCodes()
         {
             int qrCodeScale = 10;   //尺寸4-15
             int qrCodeVersion = 6;  //复杂级别3-12
@@ -41,8 +41,9 @@ namespace Mvc.Controllers
                     qRCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.Q;
                     break;
             }
-        //    System.Drawin
-        //    qRCodeEncoder.Encode();
-        //}
+            //    System.Drawin
+            //    qRCodeEncoder.Encode();
+            //}
+        }
     }
 }
