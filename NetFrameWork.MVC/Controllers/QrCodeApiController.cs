@@ -40,6 +40,25 @@ namespace NetFrameWork.MVC.Controllers
         
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public  HttpResponseMessage Qrcode() 
+        {
+            Qrcode qrcode = new Qrcode();
+            if (HttpContext.Current.IsWebSocketRequest)
+            {
+                HttpContext.Current.AcceptWebSocketRequest(qrcode.Qrcode_Request);
+            }
+            else 
+            {
+                qrcode.IsSM(HttpContext.Current);
+            }
+            return new HttpResponseMessage(HttpStatusCode.SwitchingProtocols);
+        }
+
         [HttpGet]
         public void Name() 
         {

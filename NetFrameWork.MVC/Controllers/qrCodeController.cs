@@ -37,8 +37,8 @@ namespace NetFrameWork.MVC.Controllers
             return View();
         }
 
-        [HttpGet]
-        public void qrCodes()
+        //[HttpGet]
+        public byte[] qrCodes()
         {
             int qrCodeScale = 12;   //尺寸4-15
             int qrCodeVersion = 0;  //复杂级别3-12
@@ -75,6 +75,9 @@ namespace NetFrameWork.MVC.Controllers
             memoryStream.Read(ddd, 0, (int)dd);
             BinaryReader binary = new BinaryReader(memoryStream);
             var ccc = memoryStream.ToArray();
+
+            return ccc;
+
             //byte[] by = new byte[memoryStream.Length];
             //memoryStream.Read(by, 0, (int)memoryStream.Length);
             //memoryStream.Position = 0;
@@ -82,33 +85,33 @@ namespace NetFrameWork.MVC.Controllers
             //解析二维码
             //QRCodeDecoder decoder = new QRCodeDecoder();
             //string decodeString = decoder.decode(new QRCodeBitmapImage(new Bitmap(bitmap)));
-            string fileName = qrCodeScale + "_" + qrCodeVersion + "_" + qrCodeErrorCorrect;
-            string filePath = AppDomain.CurrentDomain.BaseDirectory;
-            string file_Path = "D:\\ExcelServer\\Qrcode\\" + fileName +DateTime.Now.ToFileTime().ToString().Replace(" ","")+ ".jpg";
-            var aa = "D:\\ExcelServer\\Qrcode\\";
-            try
-            {
-                if (!Directory.Exists(file_Path))
-                {
-                    Directory.CreateDirectory(aa);
-                }
-                bitmap.Save(file_Path);
+            //string fileName = qrCodeScale + "_" + qrCodeVersion + "_" + qrCodeErrorCorrect;
+            //string filePath = AppDomain.CurrentDomain.BaseDirectory;
+            //string file_Path = "D:\\ExcelServer\\Qrcode\\" + fileName +DateTime.Now.ToFileTime().ToString().Replace(" ","")+ ".jpg";
+            //var aa = "D:\\ExcelServer\\Qrcode\\";
+            //try
+            //{
+            //    if (!Directory.Exists(file_Path))
+            //    {
+            //        Directory.CreateDirectory(aa);
+            //    }
+                //bitmap.Save(file_Path);
                 //FileStream fileStream = new FileStream(file_Path,FileMode.OpenOrCreate,FileAccess.Read);
-                HttpContext.Response.Clear();
-                HttpContext.Response.Buffer = true;
-                HttpContext.Response.ContentEncoding = Encoding.UTF8;
-                HttpContext.Response.Charset = "UTF-8";
-                HttpContext.Response.AddHeader("Content-Disposition", string.Format(@"attachment;filename=""{0}""", HttpUtility.UrlEncode(fileName+".jpg")));
-                HttpContext.Response.ContentType = "application/octet-stream";
-                HttpContext.Response.AddHeader("Content-Length",ddd.Length.ToString());
-                HttpContext.Response.WriteBinary(ddd);
-                HttpContext.Response.Filter.Close();
-                HttpContext.Response.Flush();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+                //HttpContext.Response.Clear();
+                //HttpContext.Response.Buffer = true;
+                //HttpContext.Response.ContentEncoding = Encoding.UTF8;
+                //HttpContext.Response.Charset = "UTF-8";
+                //HttpContext.Response.AddHeader("Content-Disposition", string.Format(@"attachment;filename=""{0}""", HttpUtility.UrlEncode(fileName+".jpg")));
+                //HttpContext.Response.ContentType = "application/octet-stream";
+                //HttpContext.Response.AddHeader("Content-Length",ddd.Length.ToString());
+                //HttpContext.Response.WriteBinary(ddd);
+                //HttpContext.Response.Filter.Close();
+            //    //HttpContext.Response.Flush();
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
         }
 
         /// <summary>

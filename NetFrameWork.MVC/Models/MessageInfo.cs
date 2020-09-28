@@ -102,7 +102,7 @@ namespace NetFrameWork.MVC.Models
                             string userName = Encoding.UTF8.GetString(buffer.Array, 0, result.Count);
                             //Encoding.UTF8.GetBytes();
                             string[] msgList = userName.Split('|');
-                            if (msgList.Length == 2)
+                            if (msgList.Length >0)
                             {
                                 if (msgList[0].Trim().Length > 0)
                                 {

@@ -22,66 +22,75 @@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script>
-        //$("#dj").click(function () {
-        //    $.ajax({
-        //        type: "get",
-        //        dataType: "json",
-        //        data: "",
-        //        url: "/qrCode/qrCodes",
-        //        success: "",
-        //        error: function ()
-
-        //        }
-        //    })
-        //})
-
-        $("#ajax").click(function ()
-        {
-            $.ajax({
-                type: "get",
-                url: "/api/QrCodeApi/Name",
-                data: "",
-                dataType: "json",
-                success: function ()
-                {
-                },
-                error: function ()
-                {
-
-                }
-            })
-        })
 
 
         $("#dj").click(function () {
-            var xml = new XMLHttpRequest();
-            xml.open('get', '/qrCode/qrCodes', true);
-            xml.setRequestHeader("Accept", "application/json;q=0.5");
-            xml.setRequestHeader("Content-Type", "application/w-www-form-urlencoded");
-            xml.responseType = "blob";
-            xml.onload = function () {
-                if (this.status == 200) {
-                    console.log(xml.response);
-                    var blo = new Blob([xml.response]);
-                    //urlencoded 使用FileReader将文件流转换成base64格式；
-                    var cc = window.URL.createObjectURL(blo);
-                    $("#image").attr("src", cc);
-                    //var c = document.createElement("a");
-                    //c.download = "1234.jpg";
-                    //c.style.display = "none";
-                    //c.href = cc;
-                    //document.body.appendChild(c);
-                    //c.click();
-                    //document.body.removeChild(c);
-                    //var reader = new FileReader();
-                    //reader.readAsDataURL(blob);
-                    //reader.onload = function ()
-                    //{
-                    //    $("#image").attr("src", reader.result);
-                    //}
+            alert("1");
+            var ddtime = new Date().getTime();
+            console.log(window.location.host);
+            var dd = "wss://localhost:44397/api/QrCodeApi/Qrcode?rqID=" + ddtime;
+            ws = new WebSocket(dd);
+            ws.onopen = function () {
+                console.log(ws.readyState);
+                if (ws.readyState == WebSocket.OPEN)
+                {
+                    ws.send(ddtime);
                 }
             }
-            xml.send();
+            ws.onmessage = function (evt) {
+                console.log(evt.data);
+                if (evt.data == "2")
+                {
+                    return;
+                }
+                var blo = new Blob([evt.data]);
+                var cc = window.URL.createObjectURL(blo);
+                var c = document.createElement("a");
+                $("#image").attr("src", cc);
+                //c.download = "1234.jpg";
+                //c.style.display = "none";
+                //c.href = cc;
+                //document.body.appendChild(c);
+                //c.click();
+                //document.body.removeChild(c);
+            }
+            ws.onerror = function (evt) {
+                $('#msg').append('<p>' + JSON.stringify(evt) + '</p>');
+            }
+            ws.onclose = function () {
+                $('#msg').append('<p>已经关闭</p>');
+            }
+            // ws.onopen();
+            console.log(ws.readyState);
+
+            //var xml = new XMLHttpRequest();
+            //xml.open('get', '/qrCode/qrCodes', true);
+            //xml.setRequestHeader("Accept", "application/json;q=0.5");
+            //xml.setRequestHeader("Content-Type", "application/w-www-form-urlencoded");
+            //xml.responseType = "blob";
+            //xml.onload = function () {
+            //    if (this.status == 200) {
+            //        console.log(xml.response);
+            //        var blo = new Blob([xml.response]);
+            //        //urlencoded 使用FileReader将文件流转换成base64格式；
+            //        var cc = window.URL.createObjectURL(blo);
+            //        $("#image").attr("src", cc);
+            //        //var c = document.createElement("a");
+            //        //c.download = "1234.jpg";
+            //        //c.style.display = "none";
+            //        //c.href = cc;
+            //        //document.body.appendChild(c);
+            //        //c.click();
+            //        //document.body.removeChild(c);
+            //        //var reader = new FileReader();
+            //        //reader.readAsDataURL(blob);
+            //        //reader.onload = function ()
+            //        //{
+            //        //    $("#image").attr("src", reader.result);
+            //        //}
+            //    }
+            //}
+            //xml.send();
 
             //WebSocket.bufferedAmount();
         })
