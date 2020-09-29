@@ -10,25 +10,58 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <title>Index</title>
+    <style>
+        .c {
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            position: absolute;
+            z-index: 200;
+            opacity: 0.8;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .cc {
+            display:none;
+        }
+
+        .b {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            z-index: 20;
+        }
+        .a {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <img src="" id="image" style="width:200px;height:200px;" alt="二维码" class="img-rounded">
+    <div class="a">
+        <div class="b">
+            <img src="" id="image" style="width:200px;height:200px;" alt="二维码" class="img-rounded">
+        </div>
+        <div class="c cc" ><span>二维码已过期，请刷新二维码</span></div>
     </div>
+  
     <div>
         <button id="dj">传递 sql 二维码</button>
         <button id="ajax">ajax</button>
     </div>
+
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script>
 
 
         $("#dj").click(function () {
-            alert("1");
             var ddtime = new Date().getTime();
             console.log(window.location.host);
-            var dd = "wss://localhost:44397/api/QrCodeApi/Qrcode?rqID=" + ddtime;
+            var dd = "wss://192.168.131.211:44397/api/QrCodeApi/Qrcode?rqID=" + ddtime;
             ws = new WebSocket(dd);
             ws.onopen = function () {
                 console.log(ws.readyState);
@@ -37,10 +70,13 @@
                     ws.send(ddtime);
                 }
             }
+            $(".c").addClass("cc");
             ws.onmessage = function (evt) {
                 console.log(evt.data);
+                console.log(typeof (evt.data))
                 if (evt.data == "2")
                 {
+                    $(".c").removeClass("cc");
                     return;
                 }
                 var blo = new Blob([evt.data]);
@@ -96,7 +132,7 @@
         })
         if ("WebSocket" in window) {
             console.log("您的浏览器支持WebSocket");
-            var ws = new WebSocket("ws://localhost:44397"); //创建 webscoket
+            var ws = new WebSocket("wss://192.168.131.211:44397"); //创建 webscoket
             console.log(ws.readyState);
             ws.onopen = function () {
                 //当WebSocket创建成功时，触发onopen事件

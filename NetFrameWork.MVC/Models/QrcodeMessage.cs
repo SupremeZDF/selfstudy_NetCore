@@ -103,7 +103,7 @@ namespace NetFrameWork.MVC.Models
             int qrCodeScale = 12;   //尺寸4-15
             int qrCodeVersion = 0;  //复杂级别3-12
             string qrCodeErrorCorrect = "H"; // 容错量"H","L","M","Q"
-            string enCodeString = "https://192.168.131.211:44397/qrcode/index";   //二维码信息
+            string enCodeString = "https://192.168.131.211:44397/api/QrCodeApi/Qrcode?rqID=" + qrid;   //二维码信息
             QRCodeEncoder qRCodeEncoder = new QRCodeEncoder();
             qRCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;  //编码方式(注意：BYTE能支持中文，ALPHA_NUMERIC扫描出来的都是数字)
             qRCodeEncoder.QRCodeScale = qrCodeScale;//大小(值越大生成的二维码图片像素越高)
