@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Model\SwaggerVerification.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Model\SwaggerVerification.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="sqlSugar" Version="5.0.0.15" />
     <PackageReference Include="sqlSugarCore" Version="5.0.0.15" />
   </ItemGroup>

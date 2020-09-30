@@ -11,6 +11,11 @@ namespace Swagger.JwtWebApi.Controllers
     [ApiController]
     public class Exercise : ControllerBase
     {
-
+        //设置过期时间位20秒
+        [ResponseCache(Duration = 20)]
+        public void Name() 
+        {
+          
+        }
     }
 }
